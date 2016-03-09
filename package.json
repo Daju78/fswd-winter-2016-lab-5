@@ -5,10 +5,10 @@
   "repository": "betamore/fswd-winter-2016-lab-5",
   "main": "lib/server.js",
   "scripts": {
-    "test": "mocha",
-    "start": "./node_modules/.bin/webpack --progress --watch & node ./lib/server.js",
+    "test": "NODE_ENV=test mocha",
+    "start": "node ./lib/server.js",
     "dev_db_create": "createdb fswd_lab_5_development",
-    "postinstall": "sequelize db:migrate"
+    "postinstall": "sequelize db:migrate && webpack"
   },
   "keywords": [],
   "author": "",

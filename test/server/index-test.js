@@ -1,7 +1,10 @@
 'use strict';
 
+// load the common test setup code
+require('../setup-test');
+
 // code to test
-var app = require('../lib/app');
+var app = require('../../lib/app');
 
 // libraries
 var request = require('supertest');
