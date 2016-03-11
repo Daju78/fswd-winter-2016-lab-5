@@ -15,6 +15,12 @@ describe('users', function() {
     agent = request(app);
   })
   describe('registration', function() {
+    it('should have a registration page', function() {
+      return agent
+        .get('/register')
+        .expect(200)
+    });
+
     it('should log the new user in', function() {
       return agent
         .post('/users/new')

@@ -3,3 +3,4 @@ npm-debug.log
 npm-debug.log*
 public/browser-bundle.js
 dump.rdb
+coverage

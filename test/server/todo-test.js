@@ -9,6 +9,8 @@ var app = require('../../lib/app');
 // libraries
 var request = require('supertest-as-promised');
 
+var Task = require('../../models').Task;
+
 describe('todo', function() {
   describe('with no existing todos', function() {
     describe('API calls', function() {
@@ -27,6 +29,15 @@ describe('todo', function() {
           .expect(302)
           .expect('Location', '/todo');
       });
+
+      it('should return a 404 for bad ids', function() {
+        return Task.max('id')
+          .then(function(id) {
+            return request(app)
+              .get('/todo/' + ((id || 0) + 1))
+              .expect(404);
+          });
+      })
     });
 
     describe('form users', function() {
@@ -34,7 +45,7 @@ describe('todo', function() {
         return request(app)
             .get('/todo')
             .set('Accept', 'text/html')
-            .expect(200, 'All known todos: ');
+            .expect(200, 'No todos');
       });
 
       it('should return some information about the new todo', function() {
@@ -51,7 +62,6 @@ describe('todo', function() {
   describe('with a single todo', function() {
     var createdTask;
     beforeEach(function() {
-      var Task = require('../../models').Task;
       return Task.create({ title: 'Fancy new todo'}).then(function(task) {
         createdTask = task;
       });
@@ -84,6 +94,12 @@ describe('todo', function() {
     });
 
     describe('browsers', function() {
+      it('should display all the todos', function() {
+        return request(app)
+          .get('/todo')
+          .expect(200, 'All known todos: Fancy new todo');
+      });
+
       it('should display the todo', function() {
         return request(app)
           .get('/todo/' + createdTask.id)

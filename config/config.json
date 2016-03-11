@@ -12,7 +12,8 @@
     "database": "fswd_lab_5_test",
     "host": "127.0.0.1",
     "dialect": "postgres",
-    "logging": false
+    "logging": false,
+    "pool": false
   },
   "production": {
     "use_env_variable": "DATABASE_URL"
