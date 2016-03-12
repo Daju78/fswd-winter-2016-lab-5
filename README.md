@@ -1,29 +1,49 @@
+# Full Stack Web Development - Homework/Project: Multi-user Todo Lists!
 
-# Full Stack Web Development - Lab 8: Users!
+Changes! I organized the files a bit. All the user/registration related Express
+code is now in `lib/app/routes/user.js`, all the task related Express code is
+now in `lib/app/routes/todo.js`.
 
-* Update the express function that handles the POST of the
-  registration form to:
-  * Create a new [`User`](./models/user.js) record for the new user.
-  * Add the id of the newly created user record to the session in the
-    `user_id` property.
-* Add a new or update the existing `app.use` function to load the user
-  record for the session, based on the `user_id` property.
-  * Add that user record to `request` object as the `user` property.
+I also added testing tasks to the `gulp` setup. First, run `createdb fswd_lab_5_test`
+if you have not already, then run `gulp watch:test:backend` before you start
+working and it will keep running the tests I have written for the following
+tasks. A number of them fail right now, so update the code to meet the descriptions
+contained in this, and they should pass. And please feel free to add your own
+tests if that will help any.
 
-## Some conditions to consider
+## Tasks
 
-* What is the proper behavior for the registration page if the user:
-  * Already exists
-  * Is already logged in
+* Update the express handler for the registration form POST (`/users/new`)
+  to handle the following new cases:
+  * When a user fills out the registration form and the password fields do not
+    match (the `password` and `password_confirm` form fields in the
+    `request.body` object), return them to the registration page with a warning
+    that says "Passwords must match"
+  * When a user fills out the registration form with a user that already exists
+    (determined by the submitted username already existing in the `User` table),
+    return them to the registration page with a warning that says "User already
+    exists"
+* Add a template and routes needed to handle logins for existing users.
+  * `views/login.jade`
 
-## Extra credit?
+    The login template (`views/login.jade`) will have a single form with two
+    fields (`username` and `password`) and a button.
 
-* Login page! Lookup the user by username:
+  * Express function for `GET /users/login`
 
-        User.findOne({ where: { username: 'someUserName' } })
-          .then(function(user) { /* ... */ })
+    It needs to render the `views/login.jade` template.
 
-* Logout page! To remove the existing session (new id/cookie):
-  
-        request.session.destroy(function(error) { /* ... */ })
+  * Express function for `POST /users/login`
 
+    The POST function needs to find the matching user in the database (if there
+    is one) and compare the submitted password with the saved password for that
+    user.
+
+    * If the user exists and the passwords match, add the id of the user from
+      the database to the session (like the `/users/new` registration function
+      does) and redirect the user to the main index page (`/`)
+    * If no user with that username could be found, return them to the login
+      template with a warning that says "User not found".
+    * If the user is found but the submitted password does not match the
+      password in the database, return them to the login template with a warning
+      that says "Password incorrect".

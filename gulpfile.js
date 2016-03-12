@@ -1,11 +1,11 @@
+'use strict';
+
 var gulp = require('gulp'),
   gls = require('gulp-live-server'),
   mocha = require('gulp-mocha'),
-  gutil = require('gulp-util'),
-  webpack = require('webpack');
+  gutil = require('gulp-util');
 
-var expressSrcFiles = ['lib/**/*.js'],
-    testFiles = ['test/**/*.js'];
+var expressSrcFiles = ['lib/**/*.js'];
 
 gulp.task('server', function() {
   var server = gls('.');
@@ -18,8 +18,7 @@ gulp.task('server', function() {
   });
 });
 
-var mocha = require('gulp-mocha'),
-    istanbul = require('gulp-istanbul');
+var istanbul = require('gulp-istanbul');
 
 gulp.task('test:backend:pre', function() {
     return gulp.src(expressSrcFiles)
@@ -28,9 +27,10 @@ gulp.task('test:backend:pre', function() {
 });
 
 gulp.task('test:backend', ['test:backend:pre'], function() {
-    return gulp.src('test/server/**/*.js', { read: false })
-        .pipe(mocha())
-        .pipe(istanbul.writeReports());
+  return gulp.src('test/server/**/*.js', { read: false })
+    .pipe(mocha())
+    .on('error', function() { this.emit('end'); })
+    .pipe(istanbul.writeReports());
 });
 
 gulp.task('watch:test:backend', function() {
@@ -38,4 +38,8 @@ gulp.task('watch:test:backend', function() {
     return gulp.watch(expressSrcFiles.concat(['test/server/**/*.js']), ['test:backend']);
 });
 
+gulp.task('test', ['test:backend'], function() {
+  process.exit();
+});
+gulp.task('watch:test', ['watch:test:backend']);
 gulp.task('default', ['server']);

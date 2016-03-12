@@ -9,7 +9,3 @@ beforeEach(function(done) {
     return done();
   });
 });
-
-after(function() {
-  db.sequelize.close();
-});
