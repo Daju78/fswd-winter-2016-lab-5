@@ -4,9 +4,12 @@ block body
   h1 Register!
   
   form(novalidate method="POST" action="/users/new" name="registrationForm")
-    .form-group
+    .form-group(ng-class="{ 'has-error': registrationForm.username.$error }")
       label(for="username") Username
-      input.form-control(type="text" required name="username" ng-model="username")
+      input.form-control(type="text" required name="username" ng-model="username" unique-username)
+      br
+      div(ng-show="registrationForm.username.$error")
+        {{ registrationForm.username.$error }}
     .form-group
       label(for="email") Email
       input.form-control(type="email" required name="email" ng-model="email")

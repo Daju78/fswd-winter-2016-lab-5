@@ -48,3 +48,15 @@ myApp.service('todoService', function($http) {
     addTodo: addTodo
   };
 });
+
+myApp.directive('uniqueUsername', function() {
+  var knownUsernames = ['alice', 'bob', 'frank', 'danny'];
+  return {
+    require: 'ngModel',
+    link: function(scope, elem, attrs, ctrl) {
+      ctrl.$validators.uniqueUsername = function(modelValue, viewValue) {
+        return false;
+      }
+    }
+  }
+});
