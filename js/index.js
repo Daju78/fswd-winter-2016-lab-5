@@ -54,8 +54,8 @@ myApp.directive('uniqueUsername', function() {
   return {
     require: 'ngModel',
     link: function(scope, elem, attrs, ctrl) {
-      ctrl.$validators.uniqueUsername = function(modelValue, viewValue) {
-        return false;
+      ctrl.$validators.uniqueUsername = function(modelValue) {
+        return (knownUsernames.indexOf(modelValue) == -1);
       }
     }
   }

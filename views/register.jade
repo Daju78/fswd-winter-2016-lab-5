@@ -8,8 +8,9 @@ block body
       label(for="username") Username
       input.form-control(type="text" required name="username" ng-model="username" unique-username)
       br
-      div(ng-show="registrationForm.username.$error")
-        {{ registrationForm.username.$error }}
+      div.alert.alert-warning(ng-show="!registrationForm.username.$valid")
+        p(ng-show="registrationForm.username.$error.required") Username is required.
+        p(ng-show="registrationForm.username.$error.uniqueUsername") Username must be unique.
     .form-group
       label(for="email") Email
       input.form-control(type="email" required name="email" ng-model="email")
@@ -18,4 +19,4 @@ block body
       input.form-control(type="password" required name="password" ng-model="password")
       label(for="password_confirm") Confirm Password
       input.form-control(type="password" required name="password_confirm" ng-model="password_confirm")
-    button.btn.btn-default(type="submit") Register
+    button.btn.btn-default(type="submit" ng-disabled="!registrationForm.$valid") Register
