@@ -49,13 +49,21 @@ myApp.service('todoService', function($http) {
   };
 });
 
-myApp.directive('uniqueUsername', function() {
-  var knownUsernames = ['alice', 'bob', 'frank', 'danny'];
+myApp.directive('uniqueUsername', function($q, $http) {
   return {
     require: 'ngModel',
     link: function(scope, elem, attrs, ctrl) {
-      ctrl.$validators.uniqueUsername = function(modelValue) {
-        return (knownUsernames.indexOf(modelValue) == -1);
+      ctrl.$asyncValidators.uniqueUsername = function(modelValue) {
+        return $q(function(resolve, reject) {
+          $http.get('/users/available?username=' + modelValue)
+            .then(function(response) {
+              if (response.data.available) {
+                resolve();
+              } else {
+                reject();
+              }
+            });
+        });
       }
     }
   }
