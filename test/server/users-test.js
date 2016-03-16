@@ -55,12 +55,11 @@ describe('users', function() {
     });
 
     describe('when a user already exists', function() {
-      // var existingUser;
-      beforeEach(function(done) {
-        User.create({ username: 'PreExistingUser', password: 'TheirPassword' })
-          .then(function(/* user */) {
-            // existingUser = user;
-            done();
+      var existingUser;
+      beforeEach(function() {
+        return User.create({ username: 'PreExistingUser', password: 'TheirPassword' })
+          .then(function(user) {
+            existingUser = user;
           });
       });
 
@@ -69,12 +68,26 @@ describe('users', function() {
           .post('/users/new')
           .type('form')
           .send({
-            username: 'PreExistingUser',
+            username: existingUser.username,
             password: 'password',
             password_confirm: 'password'
           })
           .expect(200, /User already exists/);
-      })
+      });
+
+      it('should tell us the username is not avaialble', function() {
+        return agent
+          .get('/users/available')
+          .query({ username: existingUser.username })
+          .expect(200, { available: false });
+      });
+
+      it('should tell us that another username is available', function() {
+        return agent
+          .get('/users/available')
+          .query({ username: existingUser.username + "new" })
+          .expect(200, { available: true });
+      });
     });
   });
 

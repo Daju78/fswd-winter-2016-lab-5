@@ -8,7 +8,7 @@ block body
       label(for="username") Username
       input.form-control(type="text" required name="username" ng-model="username" unique-username)
       br
-      div.alert.alert-warning(ng-show="!registrationForm.username.$valid")
+      div.alert.alert-warning(ng-hide="registrationForm.username.$valid")
         p(ng-show="registrationForm.username.$error.required") Username is required.
         p(ng-show="registrationForm.username.$error.uniqueUsername") Username must be unique.
     .form-group
