@@ -3,7 +3,8 @@
 module.exports = function(sequelize, DataTypes) {
   var Task = sequelize.define("Task", {
     title: DataTypes.STRING,
-    completedAt: DataTypes.DATE
+    completedAt: DataTypes.DATE,
+    user_id: DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function() {

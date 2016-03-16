@@ -7,15 +7,41 @@ require('../setup-test');
 var app = require('../../lib/app');
 
 // libraries
-var request = require('supertest-as-promised');
+var request = require('supertest-as-promised').agent,
+  agent;
 
+var User = require('../../models').User;
 var Task = require('../../models').Task;
 
 describe('todo', function() {
+  beforeEach(function() {
+    agent = request(app);
+  });
+
+  describe('for a logged in user', function() {
+    beforeEach(function() {
+      return User.create({ username: 'myFancyUsername', password: 'myPassword' })
+        .then(function() {
+          return agent
+            .post('/users/login')
+            .send({ username: 'myFancyUsername', password: 'myPassword' });
+        })
+    });
+
+    it('should allow the creation of a todo', function() {
+      return agent
+        .post('/todo/new')
+        .set('Accept', 'application/json')
+        .send({ title: 'User laundry' })
+        .expect(302)
+        .expect('Location', '/todo');
+    })
+  })
+
   describe('with no existing todos', function() {
     describe('API calls', function() {
       it('should return an empty list', function() {
-        return request(app)
+        return agent
             .get('/todo')
             .set('Accept', 'application/json')
             .expect(200, []);
@@ -26,8 +52,9 @@ describe('todo', function() {
           .post('/todo/new')
           .set('Accept', 'application/json')
           .send({ title: 'My new todo' })
-          .expect(302)
-          .expect('Location', '/todo');
+          .expect(401);
+          // .expect(302)
+          // .expect('Location', '/todo');
       });
 
       it('should return a 404 for bad ids', function() {
@@ -53,7 +80,8 @@ describe('todo', function() {
           .post('/todo/new')
           .type('form')
           .send({ title: 'My new todo' })
-          .expect(200, /Hello world!/);
+          //.expect(200, /Hello world!/);
+          .expect(401);
       });
 
     });
@@ -75,6 +103,7 @@ describe('todo', function() {
             .expect(200, [
               {
                 id: createdTask.id, title: 'Fancy new todo', completedAt: null,
+                user_id: null,
                 createdAt: createdTask.createdAt.toISOString(),
                 updatedAt: createdTask.updatedAt.toISOString()
               }
@@ -87,6 +116,7 @@ describe('todo', function() {
           .set('Accept', 'application/json')
           .expect(200, {
             id: createdTask.id, title: 'Fancy new todo', completedAt: null,
+            user_id: null,
             createdAt: createdTask.createdAt.toISOString(),
             updatedAt: createdTask.updatedAt.toISOString()
           });

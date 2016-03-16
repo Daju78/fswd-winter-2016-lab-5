@@ -15,7 +15,7 @@ var User = require('../../models').User;
 describe('users', function() {
   beforeEach(function() {
     agent = request(app);
-  })
+  });
 
   describe('registration', function() {
     it('should have a registration page', function() {
@@ -124,7 +124,7 @@ describe('users', function() {
           .then(function() {
             return agent
               .get('/')
-              .expect(200, 'Hello PreExistingUser!');
+              .expect(200, /Hello PreExistingUser!/);
           });
       });
 
