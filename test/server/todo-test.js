@@ -35,7 +35,7 @@ describe('todo', function() {
         .send({ title: 'User laundry' })
         .expect(302)
         .expect('Location', '/todo');
-    })
+    });
   })
 
   describe('with no existing todos', function() {
@@ -47,14 +47,12 @@ describe('todo', function() {
             .expect(200, []);
       });
 
-      it('should return a redirect to the overall after adding', function() {
+      it('should return a 401 for adding', function() {
         return request(app)
           .post('/todo/new')
           .set('Accept', 'application/json')
           .send({ title: 'My new todo' })
           .expect(401);
-          // .expect(302)
-          // .expect('Location', '/todo');
       });
 
       it('should return a 404 for bad ids', function() {
@@ -83,16 +81,16 @@ describe('todo', function() {
           //.expect(200, /Hello world!/);
           .expect(401);
       });
-
     });
   });
 
   describe('with a single todo', function() {
     var createdTask;
-    beforeEach(function() {
-      return Task.create({ title: 'Fancy new todo'}).then(function(task) {
+    beforeEach(function(done) {
+      return Task.create({ title: 'Fancy new todo' }).then(function(task) {
         createdTask = task;
-      });
+        done();
+      })
     });
 
     describe('API calls', function() {
