@@ -1,5 +1,39 @@
 # Full Stack Web Development - Homework/Project: Multi-user Todo Lists!
 
+## Homework tasks
+
+### Implement user lists!
+
+You will need write functions for three particular urls.
+
+* `/users` - List of all the users in the system. Make both a jade/html version
+  and a JSON one (same function, just needs to use `response.format` to alter
+  the format of the response sent back to the client).
+* `/users/:user_id` - The individual page for a particular user. Think of it
+  like a profile page.
+  * Extra credit: if you want to add the list of tasks for that user to the page
+    somehow. You could load it in the Express function or you could use the next
+    url in an Angular service to load the tasks from within the page instead.
+* `/users/:user_id/tasks` - The list of tasks for a given user. Make both a
+  jade/html version and a JSON one (again, use `response.format`)
+
+### Useful tools and techniques
+
+* `gulp`! Run it in two terminal windows. One for `gulp` and one for
+  `gulp watch:test:backend`.
+* Thanks to the model associations we added, a user instance can easily retrieve
+  all the tasks associated with that user by calling the `getTasks` method, which
+  returns a promise like `Task.findAll`.
+* Loop over values in an array in jade with this syntax:
+
+  ```jade
+  ul
+    each user in users
+      li= user.username
+  ```
+
+## From earlier...
+
 Changes! I organized the files a bit. All the user/registration related Express
 code is now in `lib/app/routes/user.js`, all the task related Express code is
 now in `lib/app/routes/todo.js`.
