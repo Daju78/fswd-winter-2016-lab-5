@@ -6,10 +6,9 @@ module.exports = function(sequelize, DataTypes) {
     completedAt: DataTypes.DATE,
     user_id: DataTypes.INTEGER
   }, {
-    underscored: true,
     classMethods: {
       associate: function(models) {
-        Task.belongsTo(models.User);
+        Task.belongsTo(models.User, { foreignKey: 'user_id' });
       }
     },
     instanceMethods: {
