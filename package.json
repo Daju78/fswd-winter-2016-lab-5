@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "angular": "^1.5.0",
+    "angular-route": "^1.5.2",
     "body-parser": "^1.15.0",
     "connect-redis": "^3.0.2",
     "connect-roles": "^3.1.2",
