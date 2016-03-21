@@ -19,9 +19,11 @@ describe('todo', function() {
   });
 
   describe('for a logged in user', function() {
+    var user;
     beforeEach(function() {
       return User.create({ username: 'myFancyUsername', password: 'myPassword' })
-        .then(function() {
+        .then(function(_user_) {
+          user = _user_;
           return agent
             .post('/users/login')
             .send({ username: 'myFancyUsername', password: 'myPassword' });
@@ -35,6 +37,30 @@ describe('todo', function() {
         .send({ title: 'User laundry' })
         .expect(302)
         .expect('Location', '/todo');
+    });
+
+    describe('when there is a task', function() {
+      var createdTask;
+      beforeEach(function(done) {
+        return user.createTask({ title: 'Fancy new todo' }).then(function(task) {
+          createdTask = task;
+          done();
+        })
+      });
+      it('should not allow completion of the todo', function() {
+        createdTask.isCompleted().should.be.false;
+        return agent
+          .post('/todo/' + createdTask.id + '/complete')
+          .send()
+          .expect(302)
+          .expect('Location', '/todo/' + createdTask.id)
+          .then(function() {
+            return createdTask.reload();
+          })
+          .then(function(task) {
+            return task.isCompleted().should.be.true;
+          });
+      });
     });
   })
 
@@ -134,19 +160,12 @@ describe('todo', function() {
           .expect(200, /Fancy new todo/);
       });
 
-      it('should complete the todo', function() {
+      it('should not allow completion of the todo', function() {
         createdTask.isCompleted().should.be.false;
         return request(app)
           .post('/todo/' + createdTask.id + '/complete')
           .send()
-          .expect(302)
-          .expect('Location', '/todo/' + createdTask.id)
-          .then(function() {
-            return createdTask.reload();
-          })
-          .then(function(task) {
-            return task.isCompleted().should.be.true;
-          });
+          .expect(403);
       });
     });
   });
