@@ -31,6 +31,7 @@
     "webpack": "^1.12.14"
   },
   "devDependencies": {
+    "angular-mocks": "^1.5.2",
     "chai": "^3.5.0",
     "eslint": "^2.3.0",
     "eslint-config-standard": "^5.1.0",
@@ -44,8 +45,16 @@
     "gulp-mocha": "^2.2.0",
     "gulp-spawn-mocha": "^2.2.2",
     "gulp-util": "^3.0.7",
+    "istanbul-instrumenter-loader": "^0.2.0",
+    "karma": "^0.13.22",
+    "karma-chai": "^0.1.0",
+    "karma-coverage": "^0.5.5",
+    "karma-mocha": "^0.2.2",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "karma-webpack": "^1.7.0",
     "mocha": "^2.4.5",
     "morgan": "^1.7.0",
+    "phantomjs-prebuilt": "^2.1.6",
     "supertest": "^1.2.0",
     "supertest-as-promised": "^3.0.0",
     "webpack-stream": "^3.1.0"

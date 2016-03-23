@@ -9,6 +9,17 @@ myApp.config(function($routeProvider) {
   $routeProvider.when('/todo', {
     template: '<todo-list></todo-list>'
   });
+  $routeProvider.when('/todo/:todo_id', {
+    controller: function(todoService, $routeParams) {
+      var vm = this;
+      todoService.getTodo($routeParams.todo_id)
+        .then(function(todo) {
+          vm.todo = todo.data;
+        });
+    },
+    controllerAs: 'vm',
+    templateUrl: '/partials/todo'
+  });
 });
 
 myApp.directive('uniqueUsername', function($q, $http) {

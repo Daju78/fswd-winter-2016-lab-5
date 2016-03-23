@@ -5,6 +5,10 @@ var myApp = angular.module('myApp.todo.todoService', [
 
 myApp.service('todoService', function($http) {
 
+  function getTodo(todo_id) {
+    return $http.get('/todo/' + todo_id);
+  }
+
   function getTodoList() {
     return $http.get('/todo');
   }
@@ -14,6 +18,7 @@ myApp.service('todoService', function($http) {
   }
 
   return {
+    getTodo: getTodo,
     getTodoList: getTodoList,
     addTodo: addTodo
   };

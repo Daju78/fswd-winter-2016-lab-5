@@ -1,17 +1,15 @@
-<p>This is my todo list!!</p>
+p This is my todo list!!
 
-<div class="form-group">
-<input type="text" name="filter" ng-model="vm.filterTodo" />
-</div>
+.form-group
+  input(type="text" name="filter" ng-model="vm.filterTodo")
 
-<p>{{ vm.todoLength }} items in the list
-<ul>
-<li ng-repeat="todo in vm.todoList | filter:vm.filterTodo track by $index">
-{{ todo.title }}: {{ todo.createdAt | date }}
-</li>
-</ul>
+p {{ vm.todoLength }} items in the list
+ul
+  li(ng-repeat="todo in vm.todoList | filter:vm.filterTodo track by $index")
+    a(href="#/todo/{{todo.id}}")
+      {{ todo.title }}
+    |: {{ todo.createdAt | date }}
 
-<div class="form-group">
-<input type="text" name="newTodo" ng-model="vm.newTodo" />
-<button class="btn btn-default" ng-click="vm.addTodo(vm.newTodo)">Add!</button>
-</div>
+.form-group
+  input(type="text" name="newTodo" ng-model="vm.newTodo")
+  button(class="btn btn-default" ng-click="vm.addTodo(vm.newTodo)") Add!
