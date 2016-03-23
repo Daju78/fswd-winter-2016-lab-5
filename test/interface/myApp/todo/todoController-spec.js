@@ -6,4 +6,5 @@ describe('myApp.todo.todoController', function() {
       $scope: $rootScope.$new()
     }).should.be.defined;
   }));
+
 });

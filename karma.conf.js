@@ -1,10 +1,13 @@
 // Karma configuration
 // Generated on Tue Oct 27 2015 23:33:28 GMT-0400 (EDT)
 
-var webpackConfig = require('./webpack.config.js');
+var webpackConfig = require('./webpack.config.js'),
+  path = require('path');
+
 webpackConfig.module.preLoaders = [
   {
        test: /\.js$/,
+       include: path.resolve('js'),
        loader: 'istanbul-instrumenter'
    }
 ];
