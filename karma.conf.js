@@ -7,7 +7,6 @@ var webpackConfig = require('./webpack.config.js'),
 webpackConfig.module.preLoaders = [
   {
        test: /\.js$/,
-       include: path.resolve('js'),
        loader: 'istanbul-instrumenter'
    }
 ];
