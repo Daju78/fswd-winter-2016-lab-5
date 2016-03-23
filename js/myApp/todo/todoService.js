@@ -8,22 +8,24 @@ myApp.service('todoService', function($http) {
   function getTodo(todo_id) {
     return $http.get('/todo/' + todo_id);
   }
-//
-//   function getTodoList() {
-//     return $http.get('/todo');
-//   }
-//
-//   function addTodo(newItem) {
-//     return $http.post('/todo/new', { todo: newItem });
-//   }
-//
+
+  function getTodoList() {
+    return $http.get('/todo');
+  }
+
+  function addTodo(newItem) {
+    return $http.post('/todo/new', { todo: newItem });
+  }
+
 //   return {
 //     getTodo: getTodo,
 //     getTodoList: getTodoList,
 //     addTodo: addTodo
 //   };
   return {
-    getTodo: getTodo
+    getTodo: getTodo,
+    getTodoList: getTodoList,
+    addTodo: addTodo
   };
 });
 
