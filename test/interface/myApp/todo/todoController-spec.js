@@ -7,12 +7,20 @@ describe('myApp.todo.todoController', function() {
     }).should.be.defined;
   }));
 
-  it('should be able to add a todo', inject(function($rootScope, $controller, todoService) {
-    sinon.spy(todoService, 'addTodo');
+  it('should be able to add a todo', inject(function($rootScope, $controller, todoService, $httpBackend, $q) {
 
-    var todoController = $controller('todoController', { $scope: $rootScope.$new() });
+    var todoController = $controller('todoController', {
+      $scope: $rootScope.$new(),
+      todoService: {
+        addTodo: function(val) {
+          return $q.resolve({ data: [ { id: 42, title: val }]});
+        }
+      }
+    });
     todoController.addTodo('abc123');
-    todoService.addTodo.should.have.been.calledWith('abc123');
+    $rootScope.$digest();
+
+    todoController.todoList.should.deep.equal([ { id: 42, title: 'abc123' }]);
   }));
 
 });
