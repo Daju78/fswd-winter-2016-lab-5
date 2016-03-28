@@ -1,5 +1,9 @@
 describe('myApp.todo.todoService', function() {
-  beforeEach(module('myApp.todo.todoService'));
+  beforeEach(function() {
+    require('myApp/todo/todoService');
+  });
+
+  beforeEach(angular.mock.module('myApp.todo.todoService'));
 
   it('should exist', function() {
     angular.module('myApp.todo.todoService').should.be.defined;

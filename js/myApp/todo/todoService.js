@@ -1,4 +1,4 @@
-var angular = require('../../lib/angular');
+var angular = require('lib/angular');
 
 var myApp = angular.module('myApp.todo.todoService', [
 ]);

@@ -4,12 +4,14 @@
 var webpackConfig = require('./webpack.config.js'),
   path = require('path');
 
-webpackConfig.module.preLoaders = [
+webpackConfig.module.postLoaders = [
   {
        test: /\.js$/,
        loader: 'istanbul-instrumenter'
    }
 ];
+
+webpackConfig.devtool = 'inline-source-map';
 
 module.exports = function(config) {
   config.set({
@@ -25,8 +27,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'public/browser-bundle.js',
-      'node_modules/angular-mocks/angular-mocks.js',
+      'js/lib/angular-mocks.js',
       'test/interface/**/*-spec.js'
     ],
 
@@ -39,14 +40,15 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'public/browser-bundle.js': ['coverage', 'webpack']
+      'js/lib/angular-mocks.js': ['webpack'],
+      'test/interface/**/*.js': ['webpack']
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'coverage'],
+    reporters: ['mocha', 'coverage'],
 
 
     // web server port
@@ -79,9 +81,23 @@ module.exports = function(config) {
     // how many browser should be started simultanous
     concurrency: Infinity,
 
-    webpack: webpackConfig,
+    webpack: {
+      resolve: {
+        root: [
+            path.resolve('./js')
+        ]
+      },
+      //devtool: 'inline-source-map',
+      module: {
+          postLoaders: [ { //delays coverage til after tests are run, fixing transpiled source coverage error
+            test: /\.js$/,
+            exclude: /(test|node_modules|bower_components|js\/lib)\//,
+            loader: 'istanbul-instrumenter'
+          } ]
+        }
+    },
 
-    webpackMiddleware: {
+    webpackServer: {
       noInfo: true
     },
 

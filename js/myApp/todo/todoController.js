@@ -1,4 +1,4 @@
-var angular = require('../../lib/angular');
+var angular = require('lib/angular');
 
 var myApp = angular.module('myApp.todo.todoController', [
   require('./todoService').name
@@ -17,11 +17,14 @@ myApp.controller('todoController', function($scope, $interval, todoService) {
     });
   };
 
-  $interval(function() {
+  vm.pollTodoList = function pollTodoList() {
     todoService.getTodoList().then(function(response) {
       vm.todoList = response.data;
     });
-  }, 5000)
+  };
+
+  $interval(vm.pollTodoList, 5000);
+  vm.pollTodoList();
 });
 
 

@@ -5,7 +5,8 @@ var gulp = require('gulp'),
   mocha = require('gulp-mocha'),
   gutil = require('gulp-util'),
   webpack = require('webpack'),
-  webpackConfig = require('./webpack.config.js');
+  webpackConfig = require('./webpack.config.js'),
+  karma = require('karma');
 
 var expressSrcFiles = ['lib/**/*.js'];
 
@@ -40,6 +41,19 @@ gulp.task('watch:test:backend', function() {
     return gulp.watch(expressSrcFiles.concat(['test/server/**/*.js']), ['test:backend']);
 });
 
+gulp.task('test:frontend', function(done) {
+  new karma.Server({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: true
+  }, done).start();
+});
+
+gulp.task('watch:test:frontend', function(done) {
+  new karma.Server({
+    configFile: __dirname + '/karma.conf.js'
+  }, done).start();
+});
+
 gulp.task('test', ['test:backend'], function() {
   process.exit();
 });
@@ -53,4 +67,5 @@ gulp.task('watch:webpack', ['webpack'], function() {
   return gulp.watch('js/**/*.js', ['webpack']);
 });
 
+gulp.task('watch', ['watch:test:backend', 'watch:test:frontend']);
 gulp.task('default', ['server', 'watch:webpack']);
