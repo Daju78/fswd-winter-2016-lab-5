@@ -41,6 +41,19 @@ gulp.task('watch:test:backend', function() {
     return gulp.watch(expressSrcFiles.concat(['test/server/**/*.js']), ['test:backend']);
 });
 
+gulp.task('test:lodash:pre', function() {
+  return gulp.src('test/lodash-spec.js')
+    .pipe(istanbul())
+    .pipe(istanbul.hookRequire());
+});
+
+gulp.task('test:lodash', ['test:lodash:pre'], function() {
+  return gulp.src('test/lodash-spec.js', { read: false })
+    .pipe(mocha())
+    .on('error', function() { this.emit('end'); })
+    .pipe(istanbul.writeReports());
+});
+
 gulp.task('test:frontend', function(done) {
   new karma.Server({
     configFile: __dirname + '/karma.conf.js',
