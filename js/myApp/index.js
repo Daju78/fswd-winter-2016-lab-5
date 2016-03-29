@@ -6,6 +6,37 @@ var myApp = angular.module('myApp', [
 ]);
 
 myApp.config(function($routeProvider) {
+  $routeProvider.when('/register', {
+    templateUrl: '/partials/register',
+    resolve: {
+      isLoggedIn: function($http, $q, $location) {
+        return $http.get('/users/isLoggedIn')
+          .then(function(response) {
+              return $location.path('/todo');
+          })
+          .catch(function(response) {
+              return $q.resolve('User is not logged in');
+          });
+      }
+    }
+  });
+  $routeProvider.when('/login', {
+    templateUrl: '/partials/login',
+    controller: function($http, $location) {
+      var vm = this;
+      vm.doLogin = function() {
+        $http.post('/users/login', { username: vm.username, password: vm.password })
+          .then(function(response) {
+            $location.path('/todo');
+          })
+          .catch(function(response) {
+            console.log("ERROR!");
+            console.log(response);
+          });
+      };
+    },
+    controllerAs: 'vm'
+  });
   $routeProvider.when('/todo', {
     template: '<todo-list></todo-list>'
   });
@@ -20,6 +51,7 @@ myApp.config(function($routeProvider) {
     controllerAs: 'vm',
     templateUrl: '/partials/todo'
   });
+  $routeProvider.otherwise('/login');
 });
 
 myApp.directive('uniqueUsername', function($q, $http) {

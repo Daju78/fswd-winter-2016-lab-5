@@ -17,15 +17,22 @@ var lodashSquareAdd = _.spread(_.flow(add, square));
 require('chai').should();
 
 var myComplexArray = [
-  { id: 15, value: [1, 2, 3] }, // -> 21
-  { id: 9, value: [9, 8, 7] },  // -> 504
-  { id: 10, value: [17] }       // -> 27
+  { id: 15, value: [1, 2, 3] }, // -> 15 + 6                = 21
+  { id: 9, value: [9, 8, 7] },  // -> 9 + (9*8*7) = 9 + 504 = 513
+  { id: 10, value: [17] }       // -> 10 + 17               = 27 ==> 561
 ];
 
+function getProduct(a, b) { return a * b; }
+
+function processItem(item) {
+  return item.id + _.reduce(item.value, getProduct, 1);
+}
 
 // return id + (product of values in value array (e.g., (1 * 2 * 3) + 15)
 function complexArrayMath(arr) {
-  return 0;
+  return _.reduce(arr, function(acc, item) {
+    return _.add(acc, processItem(item));
+  }, 0);
 }
 
 describe('square-add', function() {
@@ -39,9 +46,8 @@ describe('square-add', function() {
          }));
 });
 
-
 describe('complexArrayMath', function() {
   it('should return 552 for the math', function() {
-    complexArrayMath(myComplexArray).should.equal(552);
+    complexArrayMath(myComplexArray).should.equal(561);
   });
 });

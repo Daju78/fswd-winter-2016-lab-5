@@ -1,11 +1,4 @@
 extends ./layout.jade
 
 block body
-  form(method="POST" action="/users/login")
-    .form-group
-      label Username
-      input(type="text" name="username")
-    .form-group
-      label Password
-      input(type="password" name="password")
-    button.btn.btn-default(type="submit") Login!
+  include ./partials/login.jade
