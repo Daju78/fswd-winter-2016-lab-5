@@ -37,7 +37,7 @@ We want to add a column to the tasks table to track when a particular task was c
 1. Open `migrations/20160228202524-create-task.js` and `models/task.js` in your text editor. This is the migration that creates the initial `Task` table using [`queryInterface.createTable`](http://docs.sequelizejs.com/en/latest/docs/migrations/#createtabletablename-attributes-options) and the model (the JavaScript side of the **ORM** layer) that was created at the same time.
 2. Run `npm run sequelize -- help`
 3. Run `npm run sequelize -- help:migration:create`
-4. To create a migration, we need to give it a name. Run `npm run sequelize -- migration:create --name AddCreateToTask`
+4. To create a migration, we need to give it a name. Run `npm run sequelize -- migration:create --name AddCreatedAtToTask`
 5. The output from that command will include the migration file that was created (something like `migrations/20160525193115-AddCreatedAtToTask.js`). Open it up in your text editor.
 6. Using the functions [`queryInterface.addColumn`](http://docs.sequelizejs.com/en/latest/docs/migrations/#addcolumntablename-attributename-datatypeoroptions-options) and [`queryInterface.removeColumn`](http://docs.sequelizejs.com/en/latest/docs/migrations/#removecolumntablename-attributename-options), update the migration to add/remove a `createdAt` column on the `Tasks` table. (Hint: don't forget to check out the [list of data types](http://docs.sequelizejs.com/en/latest/docs/models-definition/#data-types))
 7. When you feel confident that your migration changes are correct, you can test your migration by running `npm run sequelize -- db:migrate`.
