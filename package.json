@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./lib/server.js",
-    "dev_db_create": "createdb fswd_lab_5_development"
+    "dev_db_create": "createdb fswd_lab_5_development && sequelize db:migrate",
+    "dev_db_connect": "psql fswd_lab_5_development"
   },
   "keywords": [],
   "author": "",
