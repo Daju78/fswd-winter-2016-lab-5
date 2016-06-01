@@ -1,8 +1,11 @@
 extends ./layout.jade
 
 block body
+  h1 Hello world!
+  div(ng-controller="TodoController as otherVm")
+    p
+      | The number of todo items is: {{ otherVm.todoList.length }}
   div(ng-controller="TodoController as vm")
-    h1 Hello world!
     p
       | This is coming from the 
       code public/index.html
@@ -12,6 +15,6 @@ block body
 
     .form-group
       label(for="todo") To do
-      input.form-control(type="text" name="todo" ng-model)
+      input.form-control(type="text" name="todo" ng-model="vm.newTodo")
       input.form-control(type="text" name="otherField")
-    button.btn.btn-default(ng-click) Add Todo
+    button.btn.btn-default(ng-click="vm.addTodo(vm.newTodo)") Add Todo
