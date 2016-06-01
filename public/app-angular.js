@@ -2,11 +2,19 @@
 var angular = require('angular');
 
 angular.module('fswd.todo', [])
-  .service('TodoService', function() {
+  .service('TodoService', function($http) {
     var service = this;
     service.todoList = ['Laundry', 'Groceries'];
     service.addTodo = function(newTodo) {
-      service.todoList = service.todoList.concat([newTodo]);
+      return $http.post()
+    };
+
+    service.getTodos = function() {
+      return $http.get('/todo')
+        .then(function(response) {
+            service.todoList = response.data;
+            return service.todoList;
+        });
     };
   })
   .controller('TodoController', function(TodoService, $scope) {
@@ -20,6 +28,8 @@ angular.module('fswd.todo', [])
     }, function(newValue, oldValue) {
       vm.todoList = newValue;
     });
+
+    TodoService.getTodos();
 
   });
 

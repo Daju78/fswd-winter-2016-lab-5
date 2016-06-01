@@ -11,7 +11,7 @@ block body
       code public/index.html
       | file
     ul
-      li(ng-repeat="todo in vm.todoList") {{ todo }}
+      li(ng-repeat="todo in vm.todoList") {{ todo.title }}
 
     .form-group
       label(for="todo") To do
