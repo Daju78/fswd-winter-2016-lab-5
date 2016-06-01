@@ -1,4 +1,5 @@
 node_modules
+public/jspm_packages
 npm-debug.log*
 public/browser-bundle.js
 dump.rdb

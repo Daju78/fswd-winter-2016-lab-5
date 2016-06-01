@@ -8,7 +8,8 @@
     "start": "node ./lib/server.js",
     "dev_db_create": "createdb fswd_lab_5_development && sequelize db:migrate",
     "dev_db_connect": "psql fswd_lab_5_development",
-    "sequelize": "sequelize"
+    "sequelize": "sequelize",
+    "postinstall": "jspm install"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +24,16 @@
   },
   "devDependencies": {
     "express-debug": "^1.1.1",
+    "jspm": "^0.16.36",
     "mocha": "^2.4.5"
+  },
+  "jspm": {
+    "directories": {
+      "baseURL": "public"
+    },
+    "dependencies": {
+      "angular": "github:angular/bower-angular@^1.5.6"
+    },
+    "devDependencies": {}
   }
 }

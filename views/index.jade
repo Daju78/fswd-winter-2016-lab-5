@@ -1,15 +1,16 @@
 extends ./layout.jade
 
 block body
-  h1 Hello world!
-  p
-    | This is coming from the 
-    code public/index.html
-    | file
+  div
+    h1 Hello world!
+    p
+      | This is coming from the 
+      code public/index.html
+      | file
 
-  form(method="POST" action="/todo/new")
-    .form-group
-      label(for="todo") To do
-      input.form-control(type="text" name="todo")
-      input.form-control(type="text" name="otherField")
-    button.btn.btn-default(type="submit") Add Todo
+    form(method="POST" action="/todo/new")
+      .form-group
+        label(for="todo") To do
+        input.form-control(type="text" name="todo")
+        input.form-control(type="text" name="otherField")
+      button.btn.btn-default(type="submit") Add Todo

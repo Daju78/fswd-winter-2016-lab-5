@@ -1,7 +1,9 @@
 html
   head
     include ./includes/bootstrap.jade
-    script(src="todo.js")
+    script(src="/jspm_packages/system.js")
+    script(src="/config.js")
+    script System.import('app-angular');
     block title
       title Hello world!
 
