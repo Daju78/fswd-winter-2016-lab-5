@@ -1,16 +1,17 @@
 extends ./layout.jade
 
 block body
-  div
+  div(ng-controller="TodoController as vm")
     h1 Hello world!
     p
       | This is coming from the 
       code public/index.html
       | file
+    ul
+      li(ng-repeat="todo in vm.todoList") {{ todo }}
 
-    form(method="POST" action="/todo/new")
-      .form-group
-        label(for="todo") To do
-        input.form-control(type="text" name="todo")
-        input.form-control(type="text" name="otherField")
-      button.btn.btn-default(type="submit") Add Todo
+    .form-group
+      label(for="todo") To do
+      input.form-control(type="text" name="todo" ng-model)
+      input.form-control(type="text" name="otherField")
+    button.btn.btn-default(ng-click) Add Todo
