@@ -57,7 +57,7 @@ var Task = require('../models').Task;
   Anything that you want to execute *after* the function that returned the promise finished, you will need to attach to the promise with the `.then` function, which will be called with the value returned by the original function.
 
   ```javascript
-  Task.create({ todo: 'Laundry'}).then(function(newTask) {
+  Task.create({ title: 'Laundry'}).then(function(newTask) {
     // do a thing with newTask here
   })
   ```
