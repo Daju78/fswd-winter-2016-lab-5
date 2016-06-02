@@ -6,7 +6,10 @@ angular.module('fswd.todo', [])
     var service = this;
     service.todoList = ['Laundry', 'Groceries'];
     service.addTodo = function(newTodo) {
-      return $http.post()
+      return $http.post('/todo/new', { todo: newTodo })
+        .then(function(response) {
+          service.todoList = service.todoList.concat([response.data]);
+        });
     };
 
     service.getTodos = function() {
@@ -17,19 +20,23 @@ angular.module('fswd.todo', [])
         });
     };
   })
-  .controller('TodoController', function(TodoService, $scope) {
+  .controller('TodoController', function(TodoService, $interval) {
     var vm = this;
     vm.addTodo = function(newTodo) {
       TodoService.addTodo(newTodo);
+      vm.newTodo = '';
     };
 
-    $scope.$watch(function() {
-      return TodoService.todoList;
-    }, function(newValue, oldValue) {
-      vm.todoList = newValue;
-    });
-
-    TodoService.getTodos();
+    TodoService.getTodos()
+      .then(function(todos) {
+        vm.todoList = todos;
+      })
+    $interval(function() {
+      TodoService.getTodos()
+        .then(function(todos) {
+          vm.todoList = todos;
+        });
+    }, 5000);
 
   });
 
