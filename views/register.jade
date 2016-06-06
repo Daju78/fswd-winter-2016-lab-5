@@ -1,0 +1,8 @@
+extends ./layout.jade
+
+block body
+  form(method="POST" action="/users/new")
+    .form-group
+      label(for="username") Username
+      input.form-control(type="text" name="username")
+      button.btn.btn-default(type="submit") Register!
