@@ -11,7 +11,9 @@ block body
       code public/index.html
       | file
     ul
-      li(ng-repeat="todo in vm.todoList") {{ todo.title }}
+      li(ng-repeat="todo in vm.todoList"
+         ng-class="{ 'text-success': todo.completedAt }"
+         ng-click="") {{ todo.title }}
 
     .form-group
       label(for="todo") To do
