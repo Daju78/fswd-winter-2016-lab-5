@@ -8,6 +8,12 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function() {
       }
+    },
+    instanceMethods: {
+      markCompleted: function() {
+        this.completedAt = new Date();
+        return this.save();
+      }
     }
   });
 
