@@ -16,7 +16,10 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.0",
+    "connect-redis": "^3.0.2",
+    "cookie-parser": "^1.4.3",
     "express": "^4.13.4",
+    "express-session": "^1.13.0",
     "jade": "^1.11.0",
     "pg": "^4.4.6",
     "sequelize": "^3.19.3",
