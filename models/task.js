@@ -2,7 +2,12 @@
 
 module.exports = function(sequelize, DataTypes) {
   var Task = sequelize.define("Task", {
-    title: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: true
+      }
+    },
     completedAt: DataTypes.DATE
   }, {
     classMethods: {
