@@ -6,7 +6,8 @@ module.exports = function(sequelize, DataTypes) {
     completedAt: DataTypes.DATE
   }, {
     classMethods: {
-      associate: function() {
+      associate: function(models) {
+        Task.belongsTo(models.User);
       }
     },
     instanceMethods: {
