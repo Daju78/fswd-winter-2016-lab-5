@@ -5,7 +5,8 @@ module.exports = function(sequelize, DataTypes) {
     title: {
       type: DataTypes.STRING,
       validate: {
-        notEmpty: true
+        notEmpty: true,
+        allowNull: false
       }
     },
     completedAt: DataTypes.DATE
