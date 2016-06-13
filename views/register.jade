@@ -1,10 +1,18 @@
 extends ./layout.jade
 
 block body
-  form(method="POST" action="/users/new")
-    .form-group
-      label(for="username") Username
-      input.form-control(type="text" name="username")
-      label(for="password") Password
-      input.form-control(type="password" name="password")
-      button.btn.btn-default(type="submit") Register!
+  div(ng-controller="RegistrationFormController as vm")
+    form(method="POST" action="/users/new" name="vm.registration")
+      .form-group
+        label(for="username") Username
+        input.form-control(type="text" name="username" ng-model="vm.user.username" required)
+        label(for="email") Email Address
+        input.form-control(type="email" name="email" ng-model="vm.user.email" required)
+        label(for="password") Password
+        input.form-control(type="password" name="password" ng-model="vm.user.password" required)
+        label(for="password_confirm") Confirm Password
+        input.form-control(type="password" name="confirm_password" ng-model="user.confirm_password" registration-password-match="password")
+        button.btn.btn-default(type="submit" ng-disabled="vm.registration.$invalid") Register!
+
+    pre user = {{ vm.user | json }}
+    pre registration = {{ vm.registration | json }}
