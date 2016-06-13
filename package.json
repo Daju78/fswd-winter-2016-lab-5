@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./lib/server.js",
+    "start": "nodemon ./lib/server.js",
     "dev_db_create": "createdb fswd_lab_5_development && sequelize db:migrate",
     "dev_db_connect": "psql fswd_lab_5_development",
     "sequelize": "sequelize",
@@ -21,6 +21,7 @@
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "jade": "^1.11.0",
+    "nodemon": "^1.9.2",
     "pg": "^4.4.6",
     "sequelize": "^3.19.3",
     "sequelize-cli": "^2.3.1"
