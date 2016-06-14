@@ -3,9 +3,10 @@ extends ./layout.jade
 block body
   div(ng-controller="RegistrationFormController as vm")
     form(method="POST" action="/users/new" name="vm.registration" novalidate)
-      .form-group
+      .form-group(ng-class="{ 'has-error': vm.registration.username.$invalid }")
         label(for="username") Username
         input.form-control(type="text" name="username" ng-model="vm.user.username" required unique-username)
+        p(ng-show="vm.registration.username.$error.uniqueUsername") Username must be unique.
       .form-group(ng-class="{ 'has-error': vm.registration.email.$invalid }")
         label(for="email") Email Address
         input.form-control(type="email" name="email" ng-model="vm.user.email" required)

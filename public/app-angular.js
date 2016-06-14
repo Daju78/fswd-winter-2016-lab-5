@@ -41,17 +41,20 @@ angular.module('fswd.todo', ['fswd.todo.registration'])
   });
 
 angular.module('fswd.todo.registration', [])
-  .directive('uniqueUsername', function() {
-    var usernames = ['frank', 'harold', 'lucy'];
+  .directive('uniqueUsername', function($http) {
     return {
       restrict: 'A',
       require: '^ngModel',
       link: function(scope, element, attrs, ctrl) {
-        ctrl.$validators.uniqueUsername = function(modelValue) {
-
+        ctrl.$asyncValidators.uniqueUsername = function(modelValue) {
+          // /users/isAvailable { isAvailable: true/false }
+          return $http.post('/users/isAvailable', { username: modelValue })
+            .then(function(response) {
+              return response.data.isAvailable;
+            });
         };
       }
-    }
+    };
   })
   .directive('registrationPasswordMatch', function() {
     return {
