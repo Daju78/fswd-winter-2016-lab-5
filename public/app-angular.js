@@ -41,7 +41,7 @@ angular.module('fswd.todo', ['fswd.todo.registration'])
   });
 
 angular.module('fswd.todo.registration', [])
-  .directive('uniqueUsername', function($http) {
+  .directive('uniqueUsername', function($http, $q) {
     return {
       restrict: 'A',
       require: '^ngModel',
@@ -50,7 +50,11 @@ angular.module('fswd.todo.registration', [])
           // /users/isAvailable { isAvailable: true/false }
           return $http.post('/users/isAvailable', { username: modelValue })
             .then(function(response) {
-              return response.data.isAvailable;
+              if (!response.data.isAvailable) {
+                return $q.reject('Not available');
+              } else {
+                return true;
+              }
             });
         };
       }
