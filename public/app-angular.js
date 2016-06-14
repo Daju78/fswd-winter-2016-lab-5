@@ -41,6 +41,18 @@ angular.module('fswd.todo', ['fswd.todo.registration'])
   });
 
 angular.module('fswd.todo.registration', [])
+  .directive('uniqueUsername', function() {
+    var usernames = ['frank', 'harold', 'lucy'];
+    return {
+      restrict: 'A',
+      require: '^ngModel',
+      link: function(scope, element, attrs, ctrl) {
+        ctrl.$validators.uniqueUsername = function(modelValue) {
+
+        };
+      }
+    }
+  })
   .directive('registrationPasswordMatch', function() {
     return {
       restrict: 'A',
