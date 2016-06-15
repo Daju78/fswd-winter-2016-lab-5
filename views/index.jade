@@ -5,15 +5,13 @@ block body
   div(ng-controller="TodoController as otherVm")
     p
       | The number of todo items is: {{ otherVm.todoList.length }}
-  div(ng-controller="TodoController as vm")
+  div
     p
       | This is coming from the 
       code public/index.html
       | file
-    ul
-      li(ng-repeat="todo in vm.todoList"
-         ng-class="{ 'text-success': todo.completedAt }"
-         ng-click="") {{ todo.title }}
+
+    div(ng-view)
 
     .form-group
       label(for="todo") To do

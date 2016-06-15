@@ -7,6 +7,10 @@ System.config({
   },
 
   map: {
-    "angular": "github:angular/bower-angular@1.5.6"
+    "angular": "github:angular/bower-angular@1.5.7",
+    "angular-route": "github:angular/bower-angular-route@1.5.7",
+    "github:angular/bower-angular-route@1.5.7": {
+      "angular": "github:angular/bower-angular@1.5.7"
+    }
   }
 });

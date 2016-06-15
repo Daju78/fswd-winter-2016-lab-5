@@ -1,7 +1,7 @@
 
 var angular = require('angular');
 
-angular.module('fswd.todo', ['fswd.todo.registration'])
+angular.module('fswd.todo', ['fswd.todo.registration', require('angular-route/index')])
   .service('TodoService', function($http) {
     var service = this;
     service.todoList = ['Laundry', 'Groceries'];
@@ -38,6 +38,14 @@ angular.module('fswd.todo', ['fswd.todo.registration'])
         });
     }, 5000);
 
+  })
+  .config(function($routeProvider) {
+    $routeProvider.when('/todos', {
+      template: "<ul><li ng-repeat=\"todo in vm.todoList\" ng-class=\"{ 'text-success': todo.completedAt }\" ng-click=\"\">{{ todo.title }}</li></ul>",
+      controller: 'TodoController',
+      controllerAs: 'vm'
+    });
+    $routeProvider.otherwise('/todos');
   });
 
 angular.module('fswd.todo.registration', [])
