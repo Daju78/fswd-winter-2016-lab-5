@@ -41,7 +41,7 @@ angular.module('fswd.todo', ['fswd.todo.registration', require('angular-route/in
   })
   .config(function($routeProvider) {
     $routeProvider.when('/todos', {
-      template: "<ul><li ng-repeat=\"todo in vm.todoList\" ng-class=\"{ 'text-success': todo.completedAt }\" ng-click=\"\">{{ todo.title }}</li></ul>",
+      templateUrl: "/partials/todos",
       controller: 'TodoController',
       controllerAs: 'vm'
     });
