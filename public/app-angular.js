@@ -70,18 +70,25 @@ angular.module('fswd.todo.registration', [])
         var confirmPasswordController = formController[attrs.registrationPasswordMatch];
 
         scope.$watch(function() {
-          return confirmPasswordController.$viewValue + passwordController.$viewValue;
+          return confirmPasswordController.$viewValue;
         }, function() {
           passwordController.$$parseAndValidate();
-          confirmPasswordController.$$parseAndValidate();
         });
 
+        scope.$watch(function() {
+          return passwordController.$viewValue;
+        }, function() {
+          confirmPasswordController.$$parseAndValidate();
+        })
+
         passwordController.$validators.passwordMatch = function(modelValue) {
-          return (!modelValue && !confirmPasswordController.$modelValue) || (modelValue === confirmPasswordController.$modelValue);
+          return (!modelValue && !confirmPasswordController.$viewValue) ||
+            (modelValue === confirmPasswordController.$viewValue);
         };
 
         confirmPasswordController.$validators.passwordMatch = function(modelValue) {
-          return (!modelValue && !passwordController.$viewValue) || (modelValue === passwordController.$viewValue);
+          return (!modelValue && !passwordController.$viewValue) ||
+            (modelValue === passwordController.$viewValue);
         };
       }
     };
