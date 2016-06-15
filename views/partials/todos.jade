@@ -1,4 +1,4 @@
 ul
   li(ng-repeat="todo in vm.todoList"
-     ng-class="{ 'text-success': todo.completedAt }"
-     ng-click="") {{ todo.title }}
+     ng-class="{ 'text-success': todo.completedAt }")
+     a(href="#/todos/{{ todo.id }}") {{ todo.title }}

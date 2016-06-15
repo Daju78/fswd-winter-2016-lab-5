@@ -46,13 +46,9 @@ angular.module('fswd.todo', ['fswd.todo.registration', require('angular-route/in
     }, 5000);
 
   })
-  .controller('SingleTodoController', function(TodoService, $routeParams) {
+  .controller('SingleTodoController', function(TodoService, task) {
     var vm = this;
-
-    TodoService.getTodo($routeParams.todo_id)
-      .then(function(task) {
-        vm.task = task;
-      });
+    vm.task = task;
   })
   .config(function($routeProvider) {
     $routeProvider.when('/todos', {
@@ -63,9 +59,20 @@ angular.module('fswd.todo', ['fswd.todo.registration', require('angular-route/in
     $routeProvider.when('/todos/:todo_id', {
       templateUrl: '/partials/todo',
       controller: 'SingleTodoController',
-      controllerAs: 'vm'
+      controllerAs: 'vm',
+      resolve: {
+        task: function($route, TodoService) {
+          return TodoService.getTodo($route.current.params.todo_id)
+        }
+      }
     });
     $routeProvider.otherwise('/todos');
+  })
+  .run(function($rootScope) {
+    $rootScope.$on('$routeChangeError', function(event, current, previous, rejection) {
+      console.log(rejection);
+      alert(rejection.statusText);
+    });
   });
 
 angular.module('fswd.todo.registration', [])
