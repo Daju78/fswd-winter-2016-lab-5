@@ -9,6 +9,7 @@ angular.module('fswd.todo', ['fswd.todo.registration', require('angular-route/in
       return $http.post('/todo/new', { todo: newTodo })
         .then(function(response) {
           service.todoList = service.todoList.concat([response.data]);
+          return response.data;
         });
     };
 
@@ -50,6 +51,16 @@ angular.module('fswd.todo', ['fswd.todo.registration', require('angular-route/in
     var vm = this;
     vm.task = task;
   })
+  .controller('AddTodoController', function(TodoService, $location) {
+    var vm = this;
+    vm.addTodo = function(newTodo) {
+      TodoService.addTodo(newTodo)
+        .then(function(task) {
+          $location.path('/todos/' + task.id);
+        });
+      vm.newTodo = '';
+    };
+  })
   .config(function($routeProvider) {
     $routeProvider.when('/todos', {
       templateUrl: "/partials/todos",
@@ -65,6 +76,11 @@ angular.module('fswd.todo', ['fswd.todo.registration', require('angular-route/in
           return TodoService.getTodo($route.current.params.todo_id)
         }
       }
+    });
+    $routeProvider.when('/addTodo', {
+      templateUrl: '/partials/addTodo',
+      controller: 'AddTodoController',
+      controllerAs: 'vm'
     });
     $routeProvider.otherwise('/todos');
   })

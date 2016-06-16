@@ -1,0 +1,5 @@
+.form-group
+  label(for="todo") To do
+  input.form-control(type="text" name="todo" ng-model="vm.newTodo")
+  input.form-control(type="text" name="otherField")
+button.btn.btn-default(ng-click="vm.addTodo(vm.newTodo)") Add Todo
