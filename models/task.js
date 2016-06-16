@@ -4,9 +4,9 @@ module.exports = function(sequelize, DataTypes) {
   var Task = sequelize.define("Task", {
     title: {
       type: DataTypes.STRING,
+      allowNull: false,
       validate: {
-        notEmpty: true,
-        allowNull: false
+        notEmpty: true
       }
     },
     completedAt: DataTypes.DATE
