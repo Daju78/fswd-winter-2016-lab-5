@@ -20,6 +20,9 @@ module.exports = function(sequelize, DataTypes) {
       markCompleted: function() {
         this.completedAt = new Date();
         return this.save();
+      },
+      isCompleted: function() {
+        return !!this.completedAt;
       }
     }
   });
