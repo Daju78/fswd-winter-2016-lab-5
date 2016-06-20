@@ -28,7 +28,7 @@ angular.module('fswd.todo', ['fswd.todo.registration', require('angular-route/in
         });
     };
   })
-  .controller('TodoController', function(TodoService, $interval) {
+  .controller('TodoController', function(TodoService, $interval, $scope) {
     var vm = this;
     vm.addTodo = function(newTodo) {
       TodoService.addTodo(newTodo);
@@ -39,12 +39,16 @@ angular.module('fswd.todo', ['fswd.todo.registration', require('angular-route/in
       .then(function(todos) {
         vm.todoList = todos;
       })
-    $interval(function() {
+    var poller = $interval(function() {
       TodoService.getTodos()
         .then(function(todos) {
           vm.todoList = todos;
         });
     }, 5000);
+
+    $scope.$on('$destroy', function() {
+      $interval.cancel(poller);
+    });
 
   })
   .controller('SingleTodoController', function(TodoService, task) {
