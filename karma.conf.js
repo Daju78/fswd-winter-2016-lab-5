@@ -42,7 +42,7 @@ module.exports = function(config) {
             moduleName: 'templates'
         },
 
-        reporters: ['progress', 'coverage'],
+        reporters: ['spec', 'coverage'],
 
         coverageReporter: {
             // instrumenters: { isparta: require('isparta') },
