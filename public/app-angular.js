@@ -2,55 +2,8 @@
 var angular = require('angular');
 
 angular.module('fswd.todo', ['fswd.todo.registration', require('angular-route/index')])
-  .service('TodoService', function($http) {
-    var service = this;
-    service.todoList = ['Laundry', 'Groceries'];
-    service.addTodo = function(newTodo) {
-      return $http.post('/todo/new', { todo: newTodo })
-        .then(function(response) {
-          service.todoList = service.todoList.concat([response.data]);
-          return response.data;
-        });
-    };
-
-    service.getTodos = function() {
-      return $http.get('/todo')
-        .then(function(response) {
-            service.todoList = response.data;
-            return service.todoList;
-        });
-    };
-
-    service.getTodo = function(id) {
-      return $http.get('/todo/' + id)
-        .then(function(response) {
-          return response.data;
-        });
-    };
-  })
-  .controller('TodoController', function(TodoService, $interval, $scope) {
-    var vm = this;
-    vm.addTodo = function(newTodo) {
-      TodoService.addTodo(newTodo);
-      vm.newTodo = '';
-    };
-
-    TodoService.getTodos()
-      .then(function(todos) {
-        vm.todoList = todos;
-      })
-    var poller = $interval(function() {
-      TodoService.getTodos()
-        .then(function(todos) {
-          vm.todoList = todos;
-        });
-    }, 5000);
-
-    $scope.$on('$destroy', function() {
-      $interval.cancel(poller);
-    });
-
-  })
+  .service('TodoService', require('./fswd/todo/TodoService'))
+  .controller('TodoController', require('./fswd/todo/TodoController'))
   .controller('SingleTodoController', function(TodoService, task) {
     var vm = this;
     vm.task = task;

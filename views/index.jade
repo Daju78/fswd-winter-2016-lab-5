@@ -3,7 +3,7 @@ extends ./layout.jade
 block body
   h1 Hello world!
   div(ng-controller="TodoController as otherVm")
-    p
+    p#todo-count
       | The number of todo items is: {{ otherVm.todoList.length }}
   div
     p

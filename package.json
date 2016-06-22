@@ -4,7 +4,7 @@
   "description": "Lab 5: All Your (Data)Base Are Belong To Us",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run karma && npm run mocha",
     "start": "nodemon ./lib/server.js",
     "dev": "NODE_ENV=development nodemon ./lib/server.js",
     "dev_db_create": "createdb fswd_lab_5_development && sequelize db:migrate",
@@ -12,7 +12,11 @@
     "sequelize": "sequelize",
     "postinstall": "jspm install",
     "karma": "karma start",
-    "mocha": "istanbul cover _mocha"
+    "mocha": "istanbul cover _mocha -- -R spec test/server/*-test.js",
+    "webdriver": "webdriver-manager update && webdriver-manager start",
+    "test-server": "NODE_ENV=test PORT=8008 nodemon ./lib/server.js",
+    "protractor-backend": "npm run webdriver & npm run test-server",
+    "protractor": "protractor ./protractor.config.js"
   },
   "keywords": [],
   "author": "",
@@ -31,12 +35,21 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "chai-as-promised": "^5.3.0",
     "express-debug": "^1.1.1",
     "istanbul": "^0.4.4",
     "jspm": "^0.16.36",
     "karma": "^0.13.22",
+    "karma-chai": "^0.1.0",
+    "karma-coverage": "^1.0.0",
+    "karma-jspm": "^2.1.1",
+    "karma-mocha": "^1.0.1",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "karma-sourcemap-loader": "^0.3.7",
     "mocha": "^2.5.3",
     "morgan": "^1.7.0",
+    "phantomjs-prebuilt": "^2.1.7",
+    "protractor": "^3.3.0",
     "sinon": "^1.17.4",
     "supertest": "^1.2.0",
     "supertest-as-promised": "^3.1.0"
@@ -49,6 +62,8 @@
       "angular": "github:angular/bower-angular@^1.5.6",
       "angular-route": "github:angular/bower-angular-route@^1.5.7"
     },
-    "devDependencies": {}
+    "devDependencies": {
+      "angular-mocks": "github:angular/bower-angular-mocks@^1.5.7"
+    }
   }
 }
