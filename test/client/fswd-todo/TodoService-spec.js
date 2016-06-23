@@ -15,7 +15,7 @@ describe('fswd.todo.TodoService', function() {
   }));
 
   describe('addTodo', function() {
-    it.only('should add a todo to the list', inject(function($httpBackend, TodoService) {
+    it('should add a todo to the list', inject(function($httpBackend, TodoService) {
       $httpBackend.expectPOST('/todo/new', { todo: testTodo })
         .respond(200, { id: 3, title: testTodo});
 
@@ -24,5 +24,20 @@ describe('fswd.todo.TodoService', function() {
 
       TodoService.todoList.should.eql(['Laundry', 'Groceries', { id: 3, title: testTodo }]);
     }));
+  });
+
+  describe('getTodo', function() {
+    it('should get a given todo', function(done) {
+      inject(function($httpBackend, TodoService) {
+        $httpBackend.expectGET('/todo/1').respond(200, { id: 1, title: 'My task'});
+
+        TodoService.getTodo(1)
+          .then(function(todo) {
+            todo.should.eql({ id: 1, title: 'My task'});
+            done();
+          });
+        $httpBackend.flush();
+      });
+    });
   });
 });
