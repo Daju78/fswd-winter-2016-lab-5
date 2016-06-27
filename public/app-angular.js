@@ -13,14 +13,17 @@ angular.module('fswd.todo', ['fswd.todo.registration', require('angular-route/in
     vm.addTodo = function(newTodo) {
       TodoService.addTodo(newTodo)
         .then(function(task) {
-          $location.path('/todos/' + task.id);
+          vm.onAdd({ task: task });
         });
       vm.newTodo = '';
     };
   })
   .component('addTodo', {
     controller: 'AddTodoController',
-    templateUrl: '/partials/addTodo'
+    templateUrl: '/partials/addTodo',
+    bindings: {
+      onAdd: '&'
+    }
   })
   .component('todoList', {
     template: '<ul><todo-task ng-repeat="task in $ctrl.tasks" task-title="task.title"></todo-task></ul>',
