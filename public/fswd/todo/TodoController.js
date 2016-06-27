@@ -1,23 +1,21 @@
 module.exports = function(TodoService, $interval, $scope) {
   var vm = this;
-  vm.addTodo = function(newTodo) {
-    TodoService.addTodo(newTodo);
-    vm.newTodo = '';
-  };
 
-  TodoService.getTodos()
-    .then(function(todos) {
-      vm.todoList = todos;
-    })
-  var poller = $interval(function() {
+  function pollTodos() {
     TodoService.getTodos()
       .then(function(todos) {
         vm.todoList = todos;
       });
-  }, 5000);
+  }
+
+  var poller = $interval(pollTodos, 5000);
 
   $scope.$on('$destroy', function() {
     $interval.cancel(poller);
   });
+
+  this.onAdd = function(task) {
+    vm.todoList = vm.todoList.concat([ task ]);
+  };
 
 };

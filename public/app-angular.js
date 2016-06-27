@@ -18,6 +18,10 @@ angular.module('fswd.todo', ['fswd.todo.registration', require('angular-route/in
       vm.newTodo = '';
     };
   })
+  .component('addTodo', {
+    controller: 'AddTodoController',
+    templateUrl: '/partials/addTodo'
+  })
   .component('todoList', {
     template: '<ul><todo-task ng-repeat="task in $ctrl.tasks" task-title="task.title"></todo-task></ul>',
     bindings: {
@@ -50,9 +54,7 @@ angular.module('fswd.todo', ['fswd.todo.registration', require('angular-route/in
       }
     });
     $routeProvider.when('/addTodo', {
-      templateUrl: '/partials/addTodo',
-      controller: 'AddTodoController',
-      controllerAs: 'vm'
+      template: '<add-todo></add-todo>'
     });
     $routeProvider.otherwise('/todos');
   })
