@@ -8,6 +8,7 @@ module.exports = function(TodoService, $interval, $scope) {
       });
   }
 
+  pollTodos();
   var poller = $interval(pollTodos, 5000);
 
   $scope.$on('$destroy', function() {

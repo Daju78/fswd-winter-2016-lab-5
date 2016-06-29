@@ -1,14 +1,14 @@
 
 var angular = require('angular');
 
-angular.module('fswd.todo', ['fswd.todo.registration', require('angular-route/index')])
+angular.module("fswd.todo", ['fswd.todo.registration', require('angular-route/index')])
   .service('TodoService', require('./fswd/todo/TodoService'))
   .controller('TodoController', require('./fswd/todo/TodoController'))
   .controller('SingleTodoController', function(TodoService, task) {
     var vm = this;
     vm.task = task;
   })
-  .controller('AddTodoController', function(TodoService, $location) {
+  .controller('AddTodoController', function(TodoService) {
     var vm = this;
     vm.addTodo = function(newTodo) {
       TodoService.addTodo(newTodo)
@@ -26,19 +26,16 @@ angular.module('fswd.todo', ['fswd.todo.registration', require('angular-route/in
     }
   })
   .component('todoList', {
-    template: '<ul><todo-task ng-repeat="task in $ctrl.tasks" task-title="task.title"></todo-task></ul>',
+    template: '<ul><todo-task ng-repeat="task in $ctrl.tasks" task="task"></todo-task></ul>',
     bindings: {
       tasks: '='
     }
   })
-  .directive('todoTask', function() {
-    return {
-      restrict: 'E',
-      scope: {
-        taskTitle: '='
-      },
-      template: '<li>{{ taskTitle }}</li>'
-    };
+  .component('todoTask', {
+    template: '<li><a href="#/todos/{{ $ctrl.task.id }}">{{ $ctrl.task.title }}</a></li>',
+    bindings: {
+      task: '='
+    }
   })
   .config(function($routeProvider) {
     $routeProvider.when('/todos', {
@@ -122,7 +119,6 @@ angular.module('fswd.todo.registration', [])
     };
   })
   .controller('RegistrationFormController', function() {
-    var vm = this;
   });
 
 angular.bootstrap(document, ['fswd.todo']);
