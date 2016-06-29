@@ -15,10 +15,6 @@
     "logging": false
   },
   "production": {
-    "username": "postgres",
-    "password": null,
-    "database": "fswd_lab_5_production",
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+    "use_env_variable": "DATABASE_URL"
   }
 }
